@@ -9,36 +9,64 @@ function getComputerChoice(){
     }
     return 'scissors';
 }
-function playRound(computerChoice, playerChoice){
-    const p = playerChoice.toLowerCase();
-    const w = `Congratulations you win!!! ${playerChoice} beats ${computerChoice}`;
-    const l = `you lost!!! ${computerChoice} beats ${playerChoice}`;
-    if(p===computerChoice){
-        return `its a tie!!! ${playerChoice} draws with ${computerChoice}`
+
+let cntp =0;
+let cntc =0;
+
+function game(){
+    cntp=0;
+    cntc=0;
+    for(i=1;i<=5;i++){
+    let playerChoice = prompt("enter your choice","rock");
+    let computerChoice= getComputerChoice();
+    console.log(playRound(computerChoice,playerChoice));
     }
-    if(p==='rock'){
-        if(computerChoice=='paper'){
-            return l;
-        }
-        else if(computerChoice=='scissors'){
-            return w;
-        }
+    if(cntc>cntp){
+        console.log(`you lose!! SCORE: ${cntp}-${cntc}` );
+    }else if(cntc==cntp){
+        console.log(`its a draw!! SCORE: ${cntp}-${cntc}`);
+    }else{
+        console.log(`you win!! SCORE: ${cntp}-${cntc}`)
     }
-    if(p==='paper'){
-        if(computerChoice=='rock'){
-            return w;
+    function playRound(computerChoice, playerChoice){
+        const p = playerChoice.toLowerCase();
+        const w = `Congratulations you win!!! ${playerChoice} beats ${computerChoice}`;
+        const l = `you lost!!! ${computerChoice} beats ${playerChoice}`;
+        if(p===computerChoice){
+            return `its a tie!!! ${playerChoice} draws with ${computerChoice}`
         }
-        else if(computerChoice==='scissors'){
-            return l;
+        if(p==='rock'){
+            if(computerChoice=='paper'){
+                cntc++;
+                return l;
+            }
+            else if(computerChoice=='scissors'){
+                cntp++;
+                return w;
+            }
         }
+        if(p==='paper'){
+            if(computerChoice=='rock'){
+                cntp++;
+                return w;
+            }
+            else if(computerChoice==='scissors'){
+                cntc++;
+                return l;
+            }
+        }
+        if(p==='scissors'){
+            if(computerChoice=='paper'){
+                cntp++;
+                return w;
+            }
+            else if(computerChoice==='rock'){
+                cntc++;
+                return l;
+            }
+        }
+        return 'enter a valid choice!';
     }
-    if(p==='scissors'){
-        if(computerChoice=='paper'){
-            return w;
-        }
-        else if(computerChoice==='rock'){
-            return l;
-        }
-    }
-    return 'enter a valid choice!';
 }
+
+game();
