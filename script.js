@@ -10,43 +10,76 @@ function getComputerChoice(){
     return 'scissors';
 }
 
+
 function game(){
+    const choice= document.createElement('div');
+    const btn1 = document.createElement('button');
+    const btn2 = document.createElement('button');
+    const btn3 = document.createElement('button');
+    const disp = document.createElement('div');
+    const score = document.createElement('div');
+    const result = document.createElement('div');
+
     let cntp=0;
     let cntc=0;
-    if(cntp<5&&cntc<5){
-        getPlayerChoice();
-        getScore();
-    }else{
-      if(cntc>cntp){
-          console.log(`you lose!! SCORE: ${cntp}-${cntc}` );
-      }else if(cntc==cntp){
-        console.log(`its a draw!! SCORE: ${cntp}-${cntc}`);
-      }else{
-          console.log(`you win!! SCORE: ${cntp}-${cntc}`);
-      }
+    let round=1;
+    btn1.textContent='ROCK';
+    btn2.textContent='PAPER';
+    btn3.textContent='SCISSORS';
+    rnd.textContent=`ROUND ${round}` ;
+    
+    getPlayerChoice();
+
+    function fcheck(){
+        if(cntp<5&&cntc<5){
+            rnd.textContent=`ROUND ${round}` ;
+        }else{
+          if(cntc>cntp){
+              result.textContent=`You lose the game!! SCORE: ${cntp}-${cntc}`;
+              choice.style.display="none";
+              return;
+          }else if(cntc==cntp){
+            result.textContent=`Its a draw!! SCORE: ${cntp}-${cntc}`;
+            choice.style.display="none";
+            return;
+          }else{
+              result.textContent=`Congratulations you win the game!! SCORE: ${cntp}-${cntc}`;
+              choice.style.display="none";
+            return;
+          }
+        } 
     }
 
-
     function getPlayerChoice(){
-    btn1.addEventListener('click',()=>{
-        disp.textContent=playRound(getComputerChoice(),'rock');
-    })
-    btn2.addEventListener('click',()=>{
-        disp.textContent=playRound(getComputerChoice(),'paper');
-    })
-    btn3.addEventListener('click',()=>{
-        disp.textContent=playRound(getComputerChoice(),'scissors');
-    })
+        console.log('work');
+        btn1.addEventListener('click',()=>{
+            disp.textContent=playRound(getComputerChoice(),'rock');
+            round++;
+            fcheck();
+            return;
+        })
+        btn2.addEventListener('click',()=>{
+            disp.textContent=playRound(getComputerChoice(),'paper');
+            round++;
+            fcheck();
+            return;
+        })
+        btn3.addEventListener('click',()=>{
+            disp.textContent=playRound(getComputerChoice(),'scissors');
+            round++;
+            fcheck();
+            return;
+        })
     }
 
     function playRound(computerChoice, playerChoice){
-    const p = playerChoice.toLowerCase();
-    const w = `Congratulations you win!!! ${playerChoice} beats ${computerChoice}`;
-    const l = `you lost!!! ${computerChoice} beats ${playerChoice}`;
-    
+      const p = playerChoice.toLowerCase();
+      const w = `You win the round!!! ${playerChoice} beats ${computerChoice}`;
+      const l = `You lose the round!!! ${computerChoice} beats ${playerChoice}`;
+      
     if(p===computerChoice){
         score.textContent=`${cntp}-${cntc}`;
-        return `its a tie!!! ${playerChoice} draws with ${computerChoice}`
+        return `Its a tie!!! ${playerChoice} draws with ${computerChoice}`
     }
     if(p==='rock'){
         if(computerChoice=='paper'){
@@ -84,32 +117,32 @@ function game(){
             return l;
         }
     }
-    return 'enter a valid choice!';
 }
+container.appendChild(choice);
+choice.appendChild(btn1);
+choice.appendChild(btn2);
+choice.appendChild(btn3);
+container.appendChild(disp);
+container.appendChild(score);
+container.appendChild(result);
 
-
+return;
 }
 
 
 
 const container = document.querySelector('.container');
 
-const btn1 = document.createElement('button');
-const btn2 = document.createElement('button');
-const btn3 = document.createElement('button');
-const disp = document.createElement('div');
-const score = document.createElement('div');
 
-btn1.textContent='ROCK';
-btn2.textContent='PAPER';
-btn3.textContent='SCISSORS';
+const rnd = document.createElement('div');
+const start = document.createElement('button');
 
 
+start.textContent='START GAME';
+start.addEventListener('click',()=>{
+    start.style.display = "none";
+    game();
+})
 
-container.appendChild(btn1);
-container.appendChild(btn2);
-container.appendChild(btn3);
-container.appendChild(disp);
-container.appendChild(score);
-
-game();
+container.appendChild(rnd);
+container.appendChild(start);
